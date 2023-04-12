@@ -1,5 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session, redirect, url_for, flash
 from flaskext.mysql import MySQL
+import yaml
+
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired
 
 
 # my db connection
@@ -7,26 +12,54 @@ local_sever = True
 app = Flask(__name__)
 
 app.secret_key = 'ramprasadchaudharyschool'
-# db connection
-mysql = MySQL()
-app = Flask(__name__)
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Akshat@11'
-app.config['MYSQL_DATABASE_DB'] = 'school'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+
+# load the database configuration from YAML file
+db_config = yaml.load(open('config.yaml'), Loader=yaml.FullLoader)
+
+app.config['MYSQL_HOST'] = db_config['mysql']['host']
+app.config['MYSQL_USER'] = db_config['mysql']['user']
+app.config['MYSQL_PASSWORD'] = db_config['mysql']['password']
+app.config['MYSQL_DB'] = db_config['mysql']['database']
+
+mysql = MySQL(app)
 mysql.init_app(app)
 
 
-# Creating DB models
-# class Login(db.Model):
-#     id = db.Column(db.INTEGER, primary_key=True)
-#     name = db.Column(db.String(100))
-#     email = db.Column(db.String(100))
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Log In')
 
 
 @app.route('/')
-def main():  # put application's code here
-    return render_template('index.html')
+def index():  # put application's code here
+    access_level = session.get('user_access_level')
+    if access_level is None:
+        return redirect(url_for('login'))
+    else:
+        return redirect(url_for('home'))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        # Query the database to check if the user exists
+        cur = mysql.connect().cursor()
+        cur.execute('SELECT * from user_login where user_name=%s and user_password=%s', (username, password))
+        user = cur.fetchone()
+        cur.close()
+
+        if user:
+            # if the user exists set the session variable to their access level
+            session['user_access_level'] = user['user_access_level']
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid Username & Password')
+    return render_template('login.html', form=form)
 
 
 @app.route('/home')
