@@ -20,6 +20,10 @@ app.config['MYSQL_HOST'] = db_config['mysql']['host']
 app.config['MYSQL_USER'] = db_config['mysql']['user']
 app.config['MYSQL_PASSWORD'] = db_config['mysql']['password']
 app.config['MYSQL_DB'] = db_config['mysql']['database']
+app.config['MYSQL_DATABASE_USER'] = 'aksha'
+app.config['MYSQL_DATABASE_PASSWORD'] = '11031986'
+app.config['MYSQL_DATABASE_DB'] = 'School'
+
 
 mysql = MySQL(app)
 mysql.init_app(app)
@@ -42,6 +46,7 @@ def index():  # put application's code here
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # rint(app.config)
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -49,13 +54,17 @@ def login():
 
         # Query the database to check if the user exists
         cur = mysql.connect().cursor()
-        cur.execute('SELECT * from user_login where user_name=%s and user_password=%s', (username, password))
-        user = cur.fetchone()
-        cur.close()
+        if cur is not None:
+            cur.execute('SELECT * from user_login where user_name=%s and user_password=%s', (username, password))
+            user = cur.fetchone()
+            # print(user)
+            cur.close()
+        else:
+            return 'My database is not connected'
 
         if user:
             # if the user exists set the session variable to their access level
-            session['user_access_level'] = user['user_access_level']
+            session['user_access_level'] = user[4]
             return redirect(url_for('index'))
         else:
             flash('Invalid Username & Password')

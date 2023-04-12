@@ -1,5 +1,5 @@
 mysql:
     host: localhost
-    user: root
-    password: Akshat@11
+    user: aksha
+    password: 11031986
     database: school
