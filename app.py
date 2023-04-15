@@ -1,11 +1,10 @@
-from flask import Flask, render_template, session, redirect, url_for, flash
+from flask import Flask, render_template, session, redirect, url_for, flash, request
 from flaskext.mysql import MySQL
 import yaml
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
-
 
 # my db connection
 local_sever = True
@@ -23,7 +22,6 @@ app.config['MYSQL_DB'] = db_config['mysql']['database']
 app.config['MYSQL_DATABASE_USER'] = 'aksha'
 app.config['MYSQL_DATABASE_PASSWORD'] = '11031986'
 app.config['MYSQL_DATABASE_DB'] = 'School'
-
 
 mysql = MySQL(app)
 mysql.init_app(app)
@@ -46,7 +44,7 @@ def index():  # put application's code here
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # rint(app.config)
+    # print(app.config)
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -74,18 +72,55 @@ def login():
 @app.route('/home')
 def home():  # put application's code here
 
-    cursor = mysql.connect().cursor()
-    cursor.execute('SELECT iduser_login,user_name, user_email,user_access_level from school.user_login ;')
-    data = cursor.fetchone()
-    print(data)
-    if data is not None:
-        print(data)
-        return 'Data loaded is ' + str(data[0]) + data[1] + data[2] + str(data[3])
-    else:
-        return 'My database is not connected'
+    return render_template('home.html')
 
 
-#    return render_template('index.html')
+@app.route('/student')
+def student():  # put application's code here
+
+    return render_template('student.html')
+
+
+@app.route('/search-student', methods=['GET', 'POST'])
+def search_student():
+    if request.method == 'POST':
+        # Get the student ID from the search form
+        student_id = request.form['student_id']
+
+        if student_id:
+            # Search for the student in the database
+            cur = mysql.connect().cursor()
+            query = "SELECT * FROM student WHERE idStudent = %s"
+            cur.execute(query, (student_id,))
+            student_details = cur.fetchone()
+
+            # If the query returned a row, display the student data
+            if student_details:
+                # print(student_details)
+                return render_template('student.html', student=student_details)
+            else:
+                # If the query did not return any rows, display a flash message
+                flash('No data found for Student ID {}'.format(student_id))
+
+    return render_template('student.html')
+
+
+@app.route('/teachers')
+def teachers():  # put application's code here
+
+    return render_template('teachers.html')
+
+
+@app.route('/fees')
+def fees():  # put application's code here
+
+    return render_template('fees.html')
+
+
+@app.route('/notices')
+def notices():  # put application's code here
+
+    return render_template('notice.html')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome !!</title>
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+</head>
+<body class="body">
+    <div class="header">
+        <h1>Ram Prasad Chaudhary School</h1>
+        <h2>School Management System</h2>
+      <p></p>
+    </div>
+    <nav class="navbar navbar-default" style="background-color:lightgray;font-weight: bold;">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a style="color:black;" href="/home">Home</a></li>
+                <li><a style="color:black;" href="/student">Student</a></li>
+                <li><a style="color:black;" href="/teachers">Teachers</a></li>
+                <li><a style="color:black;" href="/fees">Student's Fee</a></li>
+                <li><a style="color:black;" href="/notices">Notices</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    {% block content %}
+
+    {% endblock content %}
+
+<!-- Footer -->
+<footer class="footer">
+
+    <!-- Section: Text -->
+    <section class="text-center p-3">
+      <p>
+        Ram Prasad Chaudhary School Students/Teachers Database Management System
+      </p>
+    </section>
+    <!-- Section: Text -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3">
+    © 2023 Copyright @Akshat Priyadarshan
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+</body>
+</html>

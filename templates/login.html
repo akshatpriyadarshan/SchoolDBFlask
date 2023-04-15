@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <link href="static/css/style.css" rel="stylesheet">
-</head>
-<body>
-<h1>Login</h1>
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <ul class="flashes">
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-{% endwith %}
-<form method="POST">
-    {{ form.csrf_token }}
-    <p>
-        {{ form.username.label }}<br>
-        {{ form.username }}
-    </p>
-    <p>
-        {{ form.password.label }}<br>
-        {{ form.password }}
-    </p>
-    <p>{{ form.submit }}</p>
-</form>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+    <div class="container" style="align-text:left">
+    <div class="container-fluid" >
+        <h1>Login</h1>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form method="POST">
+            {{ form.csrf_token }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username }}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password }}
+            </p>
+            <p>{{ form.submit }}</p>
+        </form>
+    </div>
+  </div>
+{% endblock %}
