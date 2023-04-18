@@ -19,7 +19,9 @@
           <label for="student_id">Student ID:</label>
           <input type="text" id="student_id" name="student_id">
           <button type="submit">Search</button>
+          <a href="{{ url_for('add_student') }}" class="btn btn-primary">Add Student</a>
         </form>
+
       </div>
 
 
@@ -122,6 +124,6 @@
       </div>
     {% endif %}
     </div>
-  </div>
+    </div>
 </div>
 {% endblock %}

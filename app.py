@@ -105,6 +105,81 @@ def search_student():
     return render_template('student.html')
 
 
+@app.route('/add-student', methods=['GET', 'POST'])
+def add_student():
+    # Handle the form submission to add a new student to the database
+    print("in add_student")
+    if request.method == 'POST':
+        # Get the form data from the request
+        print("request is POST")
+        student_id = int(request.form['student_id'])
+        student_admno = int(request.form['student_admno'])
+        student_tcno = request.form['student_tcno']
+        student_withdrawalno = request.form['student_withdrawalno']
+        student_firstname = request.form['student_firstname']
+        student_middlename = request.form['student_middlename']
+        student_lastname = request.form['student_lastname']
+        student_dob = request.form['student_dob']
+        student_gender = request.form['student_gender']
+        student_fathername = request.form['student_fathername']
+        student_mothersname = request.form['student_mothersname']
+        student_contactnum = request.form['student_contactnum']
+        student_address = request.form['student_address']
+        student_joiningclass = request.form['student_joiningclass']
+        student_currclass = request.form['student_currclass']
+        student_joiningdate = request.form['student_joiningdate']
+        student_exitdate = request.form['student_exitdate']
+        student_fatheroccupation = request.form['student_fatheroccupation']
+        student_currsession = request.form['student_currsession']
+        student_image = request.form['student_image']
+
+        # Validate the form data
+        if not student_admno or not student_tcno:
+            flash('Please fill in all required fields.')
+            return redirect(url_for('add_student'))
+
+        # Insert the data into the database
+        cur = mysql.connect().cursor()
+        print(cur)
+        insert_query = "INSERT INTO student (idStudent, Student_admno, Student_tcno, Student_withdrawalno, " \
+                       "Student_firstname, Student_middlename, Student_lastname, Student_dob, student_gender, " \
+                       "Student_fathername, Student_mothersname, Student_contactnum, Student_address, " \
+                       "Student_joiningclass, Student_currclass, Student_joiningdate, Student_exitdate, " \
+                       "Student_fatheroccupation, Student_currsession, student_image) " \
+                       "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        try:
+            cur.execute(insert_query, (student_id, student_admno, student_tcno, student_withdrawalno, student_firstname,
+                                       student_middlename, student_lastname, student_dob, student_gender,
+                                       student_fathername, student_mothersname, student_contactnum, student_address,
+                                       student_joiningclass, student_currclass, student_joiningdate, student_exitdate,
+                                       student_fatheroccupation, student_currsession, student_image))
+            mysql.connect().commit()
+
+            print(student_id, student_admno, student_tcno, student_withdrawalno, student_firstname, student_middlename,
+                  student_lastname, student_dob, student_gender, student_fathername, student_mothersname,
+                  student_contactnum, student_address, student_joiningclass, student_currclass, student_joiningdate,
+                  student_exitdate, student_fatheroccupation, student_currsession, student_image)
+        except mysql.connect().Error as err:
+            print(err)
+            print("Error Code:", err.errno)
+            print("SQLSTATE", err.sqlstate)
+            print("Message", err.msg)
+        except mysql.connect().ProgrammingError as err:
+            print(err)
+        except (mysql.connect().IntegrityError, mysql.connect().DataError) as err:
+            print("DataError or IntegrityError")
+            print(err)
+        finally:
+            mysql.connect().close()
+            print('New student added successfully.')
+
+        # Redirect the user back to the student page
+        return redirect(url_for('student'))
+    else:
+        # If the request is a GET request, just render the add student form
+        return render_template('add_student.html')
+
+
 @app.route('/teachers')
 def teachers():  # put application's code here
 

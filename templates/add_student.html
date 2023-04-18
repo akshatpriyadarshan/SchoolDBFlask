@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container" style="margin-bottom:60px; padding-bottom:60px;">
+    <h2>Add new Student</h2>
+    <br>
+    <form method="POST" action="{{ url_for('add_student') }}">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_id">Student ID</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_id" name="student_id">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_admno">Admission No.</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_admno" name="student_admno">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_tcno">TC No.</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_tcno" name="student_tcno">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_withdrawalno">Withdrawal No.</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_withdrawalno" name="student_withdrawalno">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_firstname">First Name</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_firstname" name="student_firstname">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_middlename">Middle Name</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_middlename" name="student_middlename">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_lastname">Last Name</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_lastname" name="student_lastname">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_dob">Date of Birth</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control datepicker" id="student_dob" name="student_dob">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_gender">Gender</label>
+        <div class="col-sm-6">
+<!--          <input type="text" class="form-control" id="student_gender" name="student_gender">-->
+          <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" id="student_gender" name="student_gender" >
+            <option selected>Select the Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_fathername">Father's Name</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_fathername" name="student_fathername">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_mothersname">Mother's Name</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_mothersname" name="student_mothersname">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_contactnum">Contact No.</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_contactnum" name="student_contactnum">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_address">Address</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_address" name="student_address">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_joiningclass">Joining Class</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_joiningclass" name="student_joiningclass">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_currclass">Current Class</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_currclass" name="student_currclass">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_joiningdate">Joining Date</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control datepicker" id="student_joiningdate" name="student_joiningdate">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_exitdate">Exit Date</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control datepicker" id="student_exitdate" name="student_exitdate">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_fatheroccupation">Father's Occupation</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_fatheroccupation" name="student_fatheroccupation">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_currsession">Current Session</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="student_currsession" name="student_currsession">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label" for="student_image">Picture</label>
+        <div class="col-sm-6">
+          <input type="file" class="form-control" id="student_image" name="student_image">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Add Student</button>
+    </form>
+  </div>
+
+
+<script>
+  $(function() {
+    $('.datepicker').datepicker({
+      dateFormat: 'yy-mm-dd', // set the date format
+      changeMonth: true,
+      changeYear: true
+    });
+  });
+</script>
+{% endblock %}
